@@ -28,8 +28,8 @@ public class Jail extends JavaPlugin {
 		getCommand("unjail").setExecutor(commands);
 		getCommand("jailinfo").setExecutor(commands);
 		getCommand("jailreload").setExecutor(commands);
-		getCommand("novpns").setExecutor(commands);
 		getCommand("jailnotifications").setExecutor(commands);
+		getCommand("novpns").setExecutor(new AntiVPNCommand(instance));
 	}
 
 	public void onDisable() {
