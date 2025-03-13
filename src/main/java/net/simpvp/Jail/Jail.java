@@ -23,6 +23,7 @@ public class Jail extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new PlayerLogin(), this);
 		getServer().getPluginManager().registerEvents(new PlayerQuit(), this);
 		getServer().getPluginManager().registerEvents(new AntiVPNCommand(instance), this);
+		getServer().getPluginManager().registerEvents(new BlockedCountries(), this);
 		Commands commands = new Commands();
 		getCommand("jail").setExecutor(commands);
 		getCommand("unjail").setExecutor(commands);

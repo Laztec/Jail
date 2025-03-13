@@ -23,6 +23,8 @@ blocked_commands:
   - world
   - op
 
+blocked_countries: []
+
 # Path to directory containing geoip legacy databases.
 # For example "/usr/share/GeoIP"
 #

@@ -25,6 +25,8 @@ public class Config {
 
 	public static HashSet<String> blocked_commands;
 
+	public static HashSet<String> blocked_countries;
+
 	public static void loadConfig() {		
 		plugin.saveDefaultConfig();
 		plugin.reloadConfig();
@@ -58,6 +60,8 @@ public class Config {
 		}
 
 		blocked_commands = new HashSet<String>(plugin.getConfig().getStringList("blocked_commands"));
+
+		blocked_countries = new HashSet<String>(plugin.getConfig().getStringList("blocked_countries"));
 
 		spawn = new Location(plugin.getServer().getWorld(world),
 				plugin.getConfig().getInt("spawn.x") + 0.5,
@@ -105,6 +109,15 @@ public class Config {
 	 */
 	public static boolean is_command_blocked(String command) {
 		return blocked_commands.contains(command);
+	}
+
+	/**
+	 * Checks if the given country code (as defined in the GeoIP database) is configured as blocked
+	 * @param command The country code
+	 * @return True if is blocked, else false
+	 */
+	public static boolean is_country_blocked(String country_code) {
+		return blocked_countries.contains(country_code);
 	}
 
 }

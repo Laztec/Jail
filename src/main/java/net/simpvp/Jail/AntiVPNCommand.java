@@ -31,6 +31,7 @@ public class AntiVPNCommand implements Listener,CommandExecutor{
 		Player player = event.getPlayer();
 		String reason = GeoIP.check_asn(event.getAddress());
 		String as = GeoIP.getAs(event.getAddress());
+		String country = GeoIP.getCountry(event.getAddress());
 		if (!requiredConditions(player) && reason != null) {
 			event.disallow(PlayerLoginEvent.Result.KICK_OTHER, ChatColor.RED + "Please turn off your VPN to connect");
 
@@ -55,6 +56,9 @@ public class AntiVPNCommand implements Listener,CommandExecutor{
 			}
 		} else {
 			String msg = String.format("%s is joining from %s", player.getName(), as);
+			if (country != null) {
+				msg += String.format(" (%s)", country);
+			}
 			if (reason != null) {
 				msg += String.format(" (bad network: %s)", reason);
 			}
