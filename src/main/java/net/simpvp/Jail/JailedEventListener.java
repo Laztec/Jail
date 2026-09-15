@@ -10,6 +10,7 @@ import org.bukkit.event.player.PlayerArmorStandManipulateEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerPickupArrowEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
@@ -161,17 +162,24 @@ public class JailedEventListener implements Listener {
 
 		event.setCancelled(true);
 	}
-	
-	/**
-	 * Prevent jailed players from placing end crystals
-	 */
+
+	@EventHandler(priority=EventPriority.LOWEST, ignoreCancelled=true)
+	public void onPlayerInteract(PlayerInteractEvent event) {
+		if (!(Jail.jailed_players.contains(event.getPlayer().getUniqueId())))
+			return;
+
+		if (event.getAction() == Action.RIGHT_CLICK_AIR
+				|| event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+			event.setCancelled(true);
+		}
+	}
+
 	@EventHandler(priority=EventPriority.LOWEST,ignoreCancelled=true)
-	public void onCrystalPlace(PlayerInteractEvent event) {
-	    if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) && Jail.jailed_players.contains(event.getPlayer().getUniqueId())) {
-	        if (event.getPlayer().getInventory().getItemInMainHand().getType().equals(Material.END_CRYSTAL)) {
-	        	event.setCancelled(true);  
-	        }
-	    }
+	public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {
+		if (!(Jail.jailed_players.contains(event.getPlayer().getUniqueId())))
+			return;
+
+		event.setCancelled(true);
 	}
 }
 
